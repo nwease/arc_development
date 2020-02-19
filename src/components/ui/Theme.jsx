@@ -24,6 +24,7 @@ export default createMuiTheme({
             fontFamily: 'Raleway',
             textTransform: 'none',
             fontWeight: 700,
+            color: 'white',
             fontSize: '1rem'
         },
 
@@ -31,7 +32,7 @@ export default createMuiTheme({
             fontFamily: 'Pacifico',
             fontSize: '1rem',
             textTransform: 'none',
-            color: '#fff'
+            color: 'white'
         }
     }
 })
