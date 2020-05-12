@@ -59,7 +59,7 @@ const useStyles = makeStyles(theme => ({
     logoContainer: {
         padding: 0,
 
-        "&:hover": {
+        '&:hover': {
             backgroundColor: 'transparent'
         }
     },
@@ -125,7 +125,13 @@ const useStyles = makeStyles(theme => ({
     },
 
     drawerItemSelected: {
-        opacity: 1
+        '& .MuiListItemText-root': {
+            opacity: 1
+        }
+    },
+
+    AppBar: {
+        zIndex: theme.zIndex.modal + 1
     }
 }));
 
@@ -231,11 +237,12 @@ const Header = (props) => {
                 classes={{paper: classes.menu}}
                 MenuListProps={{onMouseLeave: handleClose}}
                 elevation={0}
+                style={{zIndex: 1302}}
                 keepMounted
             >
                 {menuOptions.map((option, i) => (
                     <MenuItem
-                        key={option}
+                        key={`${option} ${i}`}
                         component={Link}
                         to={option.link}
                         classes={{root: classes.menuItem}}
@@ -261,6 +268,8 @@ const Header = (props) => {
                 onOpen={() => setOpenDrawer(true)}
                 classes={{paper: classes.drawer}}
             >
+                <div className={classes.toolbarMargin} />
+
                 <List disablePadding>
                     {routes.map(route => (
                         <ListItem
@@ -270,10 +279,11 @@ const Header = (props) => {
                             component={Link}
                             to={route.Link}
                             selected={value === route.activeIndex}
+                            classes={{selected: classes.drawerItemSelected}}
                             onClick={() => {setOpenDrawer(false); setValue(route.activeIndex)}}
                         >
                             <ListItemText
-                                className={value.activeIndex ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem}
+                                className={classes.drawerItem}
                                 disableTypography
                             >
                                 {route.name}
@@ -289,9 +299,10 @@ const Header = (props) => {
                         component={Link}
                         to='/estimate'
                         selected={value === 5}
+                        classes={{root: classes.drawerItemEstimate, selected: classes.drawerItemSelected}}
                     >
                         <ListItemText
-                            className={value === 5 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem}
+                            className={classes.drawerItem}
                             disableTypography
                         >
                             Free Estimate
@@ -313,7 +324,7 @@ const Header = (props) => {
     return (
         <>
             <ElevationScroll {...props}>
-                <AppBar position='fixed'>
+                <AppBar position='fixed' className={classes.AppBar}>
                     <Toolbar disableGutters>
                         <Button
                             component={Link}
